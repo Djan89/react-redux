@@ -5,7 +5,7 @@ class AboutPage extends React.Component {
         return (
             <div>
                 <h1 className="well well-sm">About</h1>
-                <p>This application uses React, React Router, Redux, ES6, Babel, Webpack and a variety of other helpful libraries.</p>
+                <p>This application uses Spring Boot, React, React Router, Redux, ES6, Babel, Webpack and a variety of other helpful libraries.</p>
             </div>
          );
     }

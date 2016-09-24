@@ -6,7 +6,7 @@ class HomePage extends React.Component {
         return (
             <div className="jumbotron">
                 <h1>Employee Web App</h1>
-                <p>React, Redux, ES6 for modern web app.</p>
+                <p>Spring Boot, React, Redux, ES6 for modern web app.</p>
                 <Link to="about" className="btn btn-primary -btn-lg">Learn More</Link>
             </div>
          );
@@ -14,4 +14,3 @@ class HomePage extends React.Component {
 }
 
 export default HomePage;
-

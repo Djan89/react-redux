@@ -7,4 +7,4 @@ export default function employeeReducer(state = [], action){
         default:
          return state;
     }
-};
+}

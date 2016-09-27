@@ -2,68 +2,58 @@ import React, {PropTypes}  from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as employeeActions from '../../actions/employeeActions';
+import EmployeeList from './EmployeeList';
+import {browserHistory} from 'react-router';
+import toastr from 'toastr';
 
 class EmployeePage extends React.Component {
-    constructor(props, context){
+    constructor(props, context) {
         super(props, context);
 
         this.state = {
-            employee: {title: ""}
+            employee: Object.assign({}, this.props.employee)
         };
 
-        this.onTitleChange = this.onTitleChange.bind(this);
-        this.onSave = this.onSave.bind(this);
+        this.redirectToAddEmployeePage = this.redirectToAddEmployeePage.bind(this);
+        this.deleteEmployee = this.deleteEmployee.bind(this);
     }
 
-    onTitleChange(event){
-        const employee = this.state.employee;
-        employee.title = event.target.value;
-        this.setState({employee: employee});
+    redirectToAddEmployeePage() {
+        browserHistory.push('/employee');
     }
 
-    onSave(event){
+    deleteEmployee(event) {
         event.preventDefault();
-        this.props.actions.createEmployee(this.state.employee);
+        this.props.actions.deleteEmployee(this.state.employees.id);
+        toastr.success("Employee Deleted Successfully");
+        browserHistory.push('/employees');
     }
 
-    employeeRow(employee, index){
-        return <div key={index}>{employee.title}</div>;
-    }
-
-    render(){
+    render() {
         return (
             <div>
                 <h1 className="well well-sm">Employees</h1>
-                {this.props.employees.map(this.employeeRow)}
-                <h2>Add Employee</h2>
-                <form className="form-inline">
-                    <div className="input-group">
-                          <input type="text" className="form-control" placeholder="Insert Title"
-                          value={this.state.employee.title} onChange={this.onTitleChange} />
-                          <span className="input-group-btn">
-                            <input type="submit" className="btn btn-default" onClick={this.onSave} value="Save" />
-                          </span>
-                    </div>
-                </form>
+                <input type="submit" className="btn btn-primary" value="Add Employee"
+                    onClick={this.redirectToAddEmployeePage} />
+                <EmployeeList employees={this.props.employees} />
             </div>
-         );
+        );
     }
 }
 
-EmployeePage.propTypes={
+EmployeePage.propTypes = {
     employees: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state, ownProps){
-    return {employees: state.employees};
+function mapStateToProps(state, ownProps) {
+    return { employees: state.employees };
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators(employeeActions, dispatch)
     };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmployeePage);
-
